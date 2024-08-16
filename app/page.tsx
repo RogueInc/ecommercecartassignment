@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; 
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ type Product = {
   title: string;
   price: number;
   thumbnail: string;
+  quantity?:number;
 };
 
 const ProductsPage: NextPage = () => {
@@ -44,9 +45,23 @@ const ProductsPage: NextPage = () => {
   }, [page]);
 
   const addToCart = (product: Product) => {
-    const updatedCart = [...cart, product];
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    setCart((prevCart) => {
+      const existingProductIndex = prevCart.findIndex((item) => item.id === product.id);
+
+      let updatedCart;
+      if (existingProductIndex !== -1) {
+        updatedCart = prevCart.map((item, index) =>
+          index === existingProductIndex
+            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            : item
+        );
+      } else {
+        updatedCart = [...prevCart, { ...product, quantity: 1 }];
+      }
+
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      return updatedCart;
+    });
   };
 
   const loadMore = () => {
@@ -81,8 +96,8 @@ const ProductsPage: NextPage = () => {
             key={product.id}
             className="border p-4 rounded-lg shadow-lg"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }} // Apply a delay based on the index
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
           >
             <div className="overflow-hidden">

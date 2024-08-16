@@ -26,10 +26,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+input[type="number"] {
+  color: #000; /* Set text color to black */
+  background-color: #fff; /* Set background color to white */
+  border: 1px solid #ccc; /* Optional border */
+  padding: 0.5rem; /* Optional padding */
 }
 
-
+@layer utilities {
+  /* Remove or comment out this class to test */
+  /* .text-balance {
+    text-wrap: balance;
+  } */
+}
