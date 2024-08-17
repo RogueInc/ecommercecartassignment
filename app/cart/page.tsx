@@ -34,7 +34,6 @@ const CartPage: NextPage = () => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
-  // Calculate subtotal
   const calculateSubtotal = () => {
     return cart.reduce((total, product) => {
       const quantity = product.quantity || 1;
@@ -42,7 +41,6 @@ const CartPage: NextPage = () => {
     }, 0);
   };
 
-  // Apply discount to subtotal
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     return subtotal - subtotal * discount;
