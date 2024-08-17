@@ -8,12 +8,12 @@ type Product = {
   title: string;
   price: number;
   thumbnail: string;
-  quantity?: number; // Add quantity to type
+  quantity?: number; 
 };
 
 const CartPage: NextPage = () => {
   const [cart, setCart] = useState<Product[]>([]);
-  const [discount, setDiscount] = useState(0.1); // 10% discount
+  const [discount, setDiscount] = useState(0.1); 
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
